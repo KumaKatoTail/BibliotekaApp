@@ -128,28 +128,38 @@ namespace BibliotekaApp
             }
         }
 
+        //private void btnZwrot_Click(object sender, EventArgs e)
+        //{
+        //    var wypozyczenia = _db.Wypozyczenia
+        //        .Where(w => w.UzytkownikId == _zalogowanyUzytkownik.Id && w.DataZwrotu == null)
+        //        .ToList();
+
+        //    if (!wypozyczenia.Any())
+        //    {
+        //        MessageBox.Show("Nie masz książek do zwrotu!", "Informacja", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //        return;
+        //    }
+
+        //    var wybraneWypozyczenie = wypozyczenia.First();
+        //    var ksiazka = _db.Ksiazki.FirstOrDefault(k => k.Id == wybraneWypozyczenie.KsiazkaId);
+
+        //    if (ksiazka != null)
+        //    {
+        //        ksiazka.Dostepnosc = true;
+        //        wybraneWypozyczenie.DataZwrotu = DateTime.Now;
+        //        _db.SaveChanges();
+        //        WyswietlKsiazki();
+        //        MessageBox.Show("Książka zwrócona!", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //    }
+        //}
         private void btnZwrot_Click(object sender, EventArgs e)
         {
-            var wypozyczenia = _db.Wypozyczenia
-                .Where(w => w.UzytkownikId == _zalogowanyUzytkownik.Id && w.DataZwrotu == null)
-                .ToList();
-
-            if (!wypozyczenia.Any())
+            using (var formZwrot = new FormZwrot(_db, _zalogowanyUzytkownik.Id))
             {
-                MessageBox.Show("Nie masz książek do zwrotu!", "Informacja", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            var wybraneWypozyczenie = wypozyczenia.First();
-            var ksiazka = _db.Ksiazki.FirstOrDefault(k => k.Id == wybraneWypozyczenie.KsiazkaId);
-
-            if (ksiazka != null)
-            {
-                ksiazka.Dostepnosc = true;
-                wybraneWypozyczenie.DataZwrotu = DateTime.Now;
-                _db.SaveChanges();
-                WyswietlKsiazki();
-                MessageBox.Show("Książka zwrócona!", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (formZwrot.ShowDialog() == DialogResult.OK)
+                {
+                    WyswietlKsiazki(); // Odświeżenie listy książek po zwrocie
+                }
             }
         }
 

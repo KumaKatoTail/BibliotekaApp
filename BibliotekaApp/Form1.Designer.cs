@@ -16,6 +16,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.dgvKsiazki = new System.Windows.Forms.DataGridView();
             this.ksiazkiBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.bibliotekaDBDataSet = new BibliotekaApp.BibliotekaDBDataSet();
@@ -44,6 +45,7 @@
             // 
             this.dgvKsiazki.AllowUserToOrderColumns = true;
             this.dgvKsiazki.AutoGenerateColumns = false;
+            this.dgvKsiazki.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.dgvKsiazki.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvKsiazki.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Id,
@@ -53,11 +55,11 @@
             this.Dostepnosc,
             this.Zaznacz});
             this.dgvKsiazki.DataSource = this.ksiazkiBindingSource;
-            this.dgvKsiazki.Location = new System.Drawing.Point(50, 80);
+            this.dgvKsiazki.Location = new System.Drawing.Point(24, 12);
             this.dgvKsiazki.Name = "dgvKsiazki";
             this.dgvKsiazki.RowHeadersVisible = false;
             this.dgvKsiazki.RowHeadersWidth = 51;
-            this.dgvKsiazki.Size = new System.Drawing.Size(772, 200);
+            this.dgvKsiazki.Size = new System.Drawing.Size(772, 471);
             this.dgvKsiazki.TabIndex = 0;
             // 
             // ksiazkiBindingSource
@@ -120,7 +122,7 @@
             // 
             this.btnWypozycz.Location = new System.Drawing.Point(828, 212);
             this.btnWypozycz.Name = "btnWypozycz";
-            this.btnWypozycz.Size = new System.Drawing.Size(75, 23);
+            this.btnWypozycz.Size = new System.Drawing.Size(87, 23);
             this.btnWypozycz.TabIndex = 3;
             this.btnWypozycz.Text = "Wypożycz";
             this.btnWypozycz.Click += new System.EventHandler(this.btnWypozycz_Click);
@@ -129,7 +131,7 @@
             // 
             this.btnZwrot.Location = new System.Drawing.Point(828, 257);
             this.btnZwrot.Name = "btnZwrot";
-            this.btnZwrot.Size = new System.Drawing.Size(75, 23);
+            this.btnZwrot.Size = new System.Drawing.Size(87, 23);
             this.btnZwrot.TabIndex = 4;
             this.btnZwrot.Text = "Zwrot";
             this.btnZwrot.Click += new System.EventHandler(this.btnZwrot_Click);
@@ -147,46 +149,49 @@
             // 
             // Id
             // 
+            this.Id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.Id.DataPropertyName = "Id";
             this.Id.HeaderText = "Id";
             this.Id.MinimumWidth = 6;
             this.Id.Name = "Id";
             this.Id.ReadOnly = true;
-            this.Id.Width = 125;
+            this.Id.Width = 47;
             // 
             // Tytul
             // 
+            this.Tytul.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Tytul.DataPropertyName = "Tytul";
             this.Tytul.HeaderText = "Tytul";
             this.Tytul.MinimumWidth = 6;
             this.Tytul.Name = "Tytul";
-            this.Tytul.Width = 125;
             // 
             // Autor
             // 
+            this.Autor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Autor.DataPropertyName = "Autor";
             this.Autor.HeaderText = "Autor";
             this.Autor.MinimumWidth = 6;
             this.Autor.Name = "Autor";
-            this.Autor.Width = 125;
             // 
             // dataGridViewTextBoxColumn1
             // 
+            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.dataGridViewTextBoxColumn1.DataPropertyName = "RokWydania";
             this.dataGridViewTextBoxColumn1.HeaderText = "RokWydania";
             this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Width = 125;
+            this.dataGridViewTextBoxColumn1.Width = 115;
             // 
             // Dostepnosc
             // 
+            this.Dostepnosc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.Dostepnosc.DataPropertyName = "Dostepnosc";
             this.Dostepnosc.HeaderText = "Dostepnosc";
             this.Dostepnosc.MinimumWidth = 6;
             this.Dostepnosc.Name = "Dostepnosc";
             this.Dostepnosc.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Dostepnosc.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Dostepnosc.Width = 125;
+            this.Dostepnosc.Width = 86;
             // 
             // Zaznacz
             // 
@@ -198,6 +203,7 @@
             // 
             // Form1
             // 
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(937, 540);
             this.Controls.Add(this.dgvKsiazki);
             this.Controls.Add(this.btnDodaj);

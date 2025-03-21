@@ -1,53 +1,76 @@
 ﻿using System;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
+using BibliotekaApp.model;
 
 namespace BibliotekaApp
 {
     public partial class FormZwrot : Form
     {
-        private int userId; 
-        private BibliotekaDBDataSet bibliotekaDB;
+        private readonly DatabaseContext _db;
+        private readonly int _userId;
 
-        public FormZwrot(int userId, BibliotekaDBDataSet bibliotekaDB)
+        public FormZwrot(DatabaseContext dbContext, int userId)
         {
             InitializeComponent();
-            this.userId = userId;
-            this.bibliotekaDB = bibliotekaDB;
+            _db = dbContext;
+            _userId = userId;
+            WyswietlWypozyczoneKsiazki();
         }
 
-        private void FormZwrot_Load(object sender, EventArgs e)
+        private void WyswietlWypozyczoneKsiazki()
         {
-            this.wypozyczeniaTableAdapter.Fill(this.bibliotekaDBDataSet.Wypozyczenia);
-            LoadWypozyczoneKsiazki();
-        }
+            var wypozyczoneKsiazki = _db.Wypozyczenia
+                .Where(w => w.UzytkownikId == _userId && w.DataZwrotu == null)
+                .Select(w => new
+                {
+                    w.Id,
+                    w.Ksiazka.Tytul,
+                    w.Ksiazka.Autor,
+                    w.DataWypozyczenia
+                })
+                .ToList();
 
-        private void LoadWypozyczoneKsiazki()
-        {
-            // Pobieranie książek wypożyczonych przez użytkownika
-            DataView view = new DataView(bibliotekaDB.Tables["Ksiazki"]);
-            view.RowFilter = $"WypozyczajacyId = {userId}"; // Filtrowanie po użytkowniku
-
-            dgvZwrot.DataSource = view; // Przypisanie danych do DataGridView
+            dgvZwrot.DataSource = wypozyczoneKsiazki;
         }
 
         private void btnZwroc_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewRow row in dgvZwrot.SelectedRows)
+            if (dgvZwrot.SelectedRows.Count == 0)
             {
-                int bookId = Convert.ToInt32(row.Cells["Id"].Value);
-
-                // Znalezienie książki w bazie danych i ustawienie jej jako dostępnej
-                DataRow[] rows = bibliotekaDB.Tables["Ksiazki"].Select($"Id = {bookId}");
-                if (rows.Length > 0)
-                {
-                    rows[0]["Dostepnosc"] = "Dostępna";
-                    rows[0]["WypozyczajacyId"] = DBNull.Value;
-                }
+                MessageBox.Show("Wybierz książkę do zwrotu!", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
 
-            // Aktualizacja widoku
-            LoadWypozyczoneKsiazki();
+            int wypozyczenieId = (int)dgvZwrot.SelectedRows[0].Cells["Id"].Value;
+
+            var wypozyczenie = _db.Wypozyczenia.FirstOrDefault(w => w.Id == wypozyczenieId);
+            if (wypozyczenie != null)
+            {
+                wypozyczenie.DataZwrotu = DateTime.Now;
+                var ksiazka = _db.Ksiazki.FirstOrDefault(k => k.Id == wypozyczenie.KsiazkaId);
+                if (ksiazka != null)
+                {
+                    ksiazka.Dostepnosc = true;
+                }
+
+                _db.SaveChanges();
+                MessageBox.Show("Książka została zwrócona!", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                WyswietlWypozyczoneKsiazki(); // Odświeżenie listy po zwrocie
+            }
+        }
+
+        private void btnAnuluj_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void FormZwrot_Load(object sender, EventArgs e)
+        {
+            // TODO: This line of code loads data into the 'bibliotekaDBDataSet.Wypozyczenia' table. You can move, or remove it, as needed.
+            this.wypozyczeniaTableAdapter.Fill(this.bibliotekaDBDataSet.Wypozyczenia);
+
         }
     }
 }
