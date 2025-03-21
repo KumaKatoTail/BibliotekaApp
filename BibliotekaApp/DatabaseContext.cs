@@ -9,7 +9,7 @@ namespace BibliotekaApp
 
         public DbSet<Ksiazka> Ksiazki { get; set; }
         public DbSet<Uzytkownik> Uzytkownicy { get; set; }
-        public DbSet<Wypozyczenie> Wypozyczenia { get; set; }
+        public DbSet<Wypozyczenia> Wypozyczenia { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BibliotekaApp.model
 {
-    public class Wypozyczenie
+    public class Wypozyczenia
     {
         [Key]
         public int Id { get; set; }

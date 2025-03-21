@@ -33,73 +33,24 @@ namespace BibliotekaApp
 
         private void WyswietlKsiazki()
         {
-            // Sprawdzenie, czy kolumny są już dodane
-            if (dgvKsiazki.Columns.Count == 0)
-            {
-                // Dodanie kolumny "Zaznacz"
-                DataGridViewCheckBoxColumn zaznaczColumn = new DataGridViewCheckBoxColumn
-                {
-                    Name = "Zaznacz",
-                    HeaderText = "Zaznacz",
-                    Width = 60
-                };
-                dgvKsiazki.Columns.Insert(0, zaznaczColumn);
-
-                // Dodanie pozostałych kolumn
-                DodajKolumne("Id", "Id", false);
-                DodajKolumne("Tytul", "Tytul");
-                DodajKolumne("Autor", "Autor");
-                DodajKolumne("RokWydania", "Rok Wydania");
-                DodajKolumne("Dostepnosc", "Dostępność");
-            }
-
-            // Pobranie książek z bazy danych
+            
             var ksiazki = _db.Ksiazki.ToList();
             dgvKsiazki.DataSource = ksiazki;
         }
 
-        private void DodajKolumne(string nazwa, string naglowek, bool jestCheckbox = false)
-        {
-            if (!dgvKsiazki.Columns.Contains(nazwa))
-            {
-                if (jestCheckbox)
-                {
-                    dgvKsiazki.Columns.Add(new DataGridViewCheckBoxColumn
-                    {
-                        Name = nazwa,
-                        HeaderText = naglowek,
-                        DataPropertyName = nazwa
-                    });
-                }
-                else
-                {
-                    dgvKsiazki.Columns.Add(new DataGridViewTextBoxColumn
-                    {
-                        Name = nazwa,
-                        HeaderText = naglowek,
-                        DataPropertyName = nazwa
-                    });
-                }
-            }
-        }
+
         private void btnDodaj_Click(object sender, EventArgs e)
         {
             if (_zalogowanyUzytkownik.Rola != "Admin") return;
 
-            string tytul = txtTytul.Text.Trim();
-            string autor = txtAutor.Text.Trim();
-            if (!int.TryParse(txtRok.Text, out int rok) || string.IsNullOrEmpty(tytul) || string.IsNullOrEmpty(autor))
+            using (var formDodaj = new FormDodajKsiazke(_db))
             {
-                MessageBox.Show("Wprowadź poprawne dane książki!", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                if (formDodaj.ShowDialog() == DialogResult.OK)
+                {
+                    WyswietlKsiazki(); // Odśwież listę książek po dodaniu nowej
+                }
             }
-
-            _db.Ksiazki.Add(new Ksiazka { Tytul = tytul, Autor = autor, RokWydania = rok, Dostepnosc = true });
-            _db.SaveChanges();
-            WyswietlKsiazki();
-            MessageBox.Show("Dodano książkę!", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
         private void btnUsun_Click(object sender, EventArgs e)
         {
             if (_zalogowanyUzytkownik.Rola != "Admin") return;
@@ -154,7 +105,7 @@ namespace BibliotekaApp
                     if (ksiazka != null && ksiazka.Dostepnosc)
                     {
                         ksiazka.Dostepnosc = false;
-                        _db.Wypozyczenia.Add(new Wypozyczenie
+                        _db.Wypozyczenia.Add(new Wypozyczenia
                         {
                             KsiazkaId = ksiazka.Id,
                             UzytkownikId = _zalogowanyUzytkownik.Id,

@@ -32,7 +32,7 @@
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Tytul = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Autor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RokWydania = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Dostepnosc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Zaznacz = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvKsiazki)).BeginInit();
@@ -42,13 +42,14 @@
             // 
             // dgvKsiazki
             // 
+            this.dgvKsiazki.AllowUserToOrderColumns = true;
             this.dgvKsiazki.AutoGenerateColumns = false;
             this.dgvKsiazki.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvKsiazki.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Id,
             this.Tytul,
             this.Autor,
-            this.RokWydania,
+            this.dataGridViewTextBoxColumn1,
             this.Dostepnosc,
             this.Zaznacz});
             this.dgvKsiazki.DataSource = this.ksiazkiBindingSource;
@@ -146,46 +147,46 @@
             // 
             // Id
             // 
-            this.Id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.Id.DataPropertyName = "Id";
             this.Id.HeaderText = "Id";
             this.Id.MinimumWidth = 6;
             this.Id.Name = "Id";
             this.Id.ReadOnly = true;
-            this.Id.Width = 47;
+            this.Id.Width = 125;
             // 
             // Tytul
             // 
-            this.Tytul.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Tytul.DataPropertyName = "Tytul";
             this.Tytul.HeaderText = "Tytul";
             this.Tytul.MinimumWidth = 6;
             this.Tytul.Name = "Tytul";
+            this.Tytul.Width = 125;
             // 
             // Autor
             // 
-            this.Autor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Autor.DataPropertyName = "Autor";
             this.Autor.HeaderText = "Autor";
             this.Autor.MinimumWidth = 6;
             this.Autor.Name = "Autor";
+            this.Autor.Width = 125;
             // 
-            // RokWydania
+            // dataGridViewTextBoxColumn1
             // 
-            this.RokWydania.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.RokWydania.DataPropertyName = "Rok Wydania";
-            this.RokWydania.HeaderText = "Rok Wydania";
-            this.RokWydania.MinimumWidth = 6;
-            this.RokWydania.Name = "RokWydania";
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "RokWydania";
+            this.dataGridViewTextBoxColumn1.HeaderText = "RokWydania";
+            this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.Width = 125;
             // 
             // Dostepnosc
             // 
-            this.Dostepnosc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.Dostepnosc.DataPropertyName = "Dostepnosc";
             this.Dostepnosc.HeaderText = "Dostepnosc";
             this.Dostepnosc.MinimumWidth = 6;
             this.Dostepnosc.Name = "Dostepnosc";
-            this.Dostepnosc.Width = 109;
+            this.Dostepnosc.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Dostepnosc.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Dostepnosc.Width = 125;
             // 
             // Zaznacz
             // 
@@ -215,10 +216,11 @@
         private System.Windows.Forms.BindingSource ksiazkiBindingSource;
         private BibliotekaDBDataSetTableAdapters.KsiazkiTableAdapter ksiazkiTableAdapter;
         private System.Windows.Forms.DataGridView dgvKsiazki;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RokWydania;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tytul;
         private System.Windows.Forms.DataGridViewTextBoxColumn Autor;
-        private System.Windows.Forms.DataGridViewTextBoxColumn RokWydania;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Dostepnosc;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Zaznacz;
     }

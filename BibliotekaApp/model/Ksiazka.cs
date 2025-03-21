@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 
 namespace BibliotekaApp.model
 {
@@ -10,5 +11,7 @@ namespace BibliotekaApp.model
         public string Autor { get; set; }
         public int RokWydania { get; set; }
         public bool Dostepnosc { get; set; } = true;
+
+
     }
 }
